@@ -35,7 +35,7 @@ encryptButton.addEventListener('click', function() {
   const encryptedMessage = encrypt(message, key);
   resultDisplayEncrypt.value = encryptedMessage;
   if (message.trim() === '' || key.trim() === '') {
-    errorDisplayEncrypt.placeholder = 'Mohon masukan plain text anda!';
+    errorDisplayEncrypt.placeholder = 'Mohon masukan Plain Text dan Key anda!';
     errorDisplayEncrypt.style.borderColor = "red";
     errorDisplayEncrypt.value = '';
     return;
@@ -49,7 +49,7 @@ decryptButton.addEventListener('click', function() {
   const decryptedMessage = decrypt(encryptedMessage, key);
   resultDisplayDecrypt.value = decryptedMessage;
   if (encryptedMessage.trim() === '' || key.trim() === '') {
-    resultDisplayDecrypt.placeholder = 'Mohon masukan key anda, untuk di decrypt!';
+    resultDisplayDecrypt.placeholder = 'Mohon masukan Chiper Text dan key anda!';
     errorDisplayDecrypt.style.borderColor = "red";
     errorDisplayDecrypt.value = '';
     return;

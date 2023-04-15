@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required>
+        <br>
+        <label for="key">Key:</label>
+        <input type="text" id="key" name="key" required>
+        <br>
+        <button type="button" onclick="encrypt()">Encrypt</button>
+        <button type="button" onclick="decrypt()">Decrypt</button>
+        <br>
+        <label for="output">Output:</label>
+        <input type="text" id="output" name="output" readonly>
+      </form>
+      
+<script>
+  // Convert string to Uint8Array
+function stringToUint8Array(str) {
+  return new TextEncoder().encode(str);
+}
+
+// Convert Uint8Array to string
+function uint8ArrayToString(uint8Array) {
+  return new TextDecoder().decode(uint8Array);
+}
+
+// Generate a random 256-bit key
+async function generateKey() {
+  return await window.crypto.subtle.generateKey(
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+}
+
+// Encrypt the message with the key
+async function encrypt() {
+  const message = document.getElementById("message").value;
+  const key = await generateKey();
+  const encodedMessage = stringToUint8Array(message);
+  const encryptedMessage = await window.crypto.subtle.encrypt(
+    { name: "AES-GCM", iv: window.crypto.getRandomValues(new Uint8Array(12)) },
+    key,
+    encodedMessage
+  );
+  document.getElementById("output").value = uint8ArrayToString(new Uint8Array(encryptedMessage));
+  document.getElementById("key").value = uint8ArrayToString(new Uint8Array(await window.crypto.subtle.exportKey("raw", key)));
+}
+
+// Decrypt the message with the key
+async function decrypt() {
+  const encryptedMessage = document.getElementById("output").value;
+  const key = await window.crypto.subtle.importKey(
+    "raw",
+    stringToUint8Array(document.getElementById("key").value),
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+  const decryptedMessage = await window.crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: window.crypto.getRandomValues(new Uint8Array(12)) },
+    key,
+    new Uint8Array(stringToUint8Array(encryptedMessage))
+  );
+  document.getElementById("message").value = uint8ArrayToString(new Uint8Array(decryptedMessage));
+}
+
+
+</script>
+</body>
+</html>

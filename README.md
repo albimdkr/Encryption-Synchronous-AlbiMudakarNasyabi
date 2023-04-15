@@ -1,6 +1,7 @@
 # Encryption-Synchronous-AlbiMudakarNasyabi
-Program Encryption Decryption Synchronous(symmetric) Dengan Bahasa Pemrograman JavaScript
-Computer Security, semester 4
+Computer Network Security, semester 4.
+Program Encryption Decryption Synchronous(symmetric) Dengan Bahasa Pemrograman JavaScript.
+
 
 Screen Shoot Program Encryption Decryption Synchronous (symmetric)
 ![1. Default tampilan](https://github.com/albimdkr/Encryption-Synchronous-AlbiMudakarNasyabi/blob/master/screenshot/1-Default-tampilan.png)
